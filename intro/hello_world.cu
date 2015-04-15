@@ -13,8 +13,7 @@
  * 
  */
 
-
-#include "book.h"
+#include <cstdio>
 
 int main( void ) {
     printf( "Hello, World!\n" );

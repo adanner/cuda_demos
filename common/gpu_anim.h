@@ -152,12 +152,12 @@ struct GPUAnimBitmap {
     // static method used for glut callbacks
     static void Key(unsigned char key, int x, int y) {
         switch (key) {
-            case 27:
-                GPUAnimBitmap*   bitmap = *(get_bitmap_ptr());
-                if (bitmap->animExit)
-                    bitmap->animExit( bitmap->dataBlock );
-                bitmap->free_resources();
-                exit(0);
+        case 27:
+            GPUAnimBitmap*   bitmap = *(get_bitmap_ptr());
+            if (bitmap->animExit)
+                bitmap->animExit( bitmap->dataBlock );
+            bitmap->free_resources();
+            exit(0);
         }
     }
 

@@ -14,7 +14,7 @@
  */
 
 
-#include "book.h"
+#include "common/book.h"
 
 __device__ int addem( int a, int b ) {
     return a + b;

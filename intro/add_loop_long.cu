@@ -14,11 +14,16 @@
  */
 
 
-#include "book.h"
+#include "common/book.h"
+#include "common/timer_gpu.h"
 
 #define N   (32 * 1024 * 1024)
 
-__global__ void add( int *a, int *b, int *c ) {
+/* Block level kernel. Logically, a grid is composed of many
+   blocks.  Physically, each block is assigned to a single
+   Multiprocessor (MP) on CUDA Hardware. The Jetson TK1
+   has only a single MP. */
+__global__ void add_block( int *a, int *b, int *c ) {
     int tid = blockIdx.x;
     while (tid < N) {
         c[tid] = a[tid] + b[tid];
@@ -26,11 +31,27 @@ __global__ void add( int *a, int *b, int *c ) {
     }
 }
 
+/* Thread level kernel. Logically, a block is composed of many
+   threads.  Physically, threads are assigned to cores
+   within a Multiprocessor (MP) on CUDA Hardware. The Jetson TK1
+   has 192 cores/MP.  Groups of 32 threads are called a warp. 
+   All threads within a warp must execute the same instruction or 
+   remain idle.
+ */
+__global__ void add_thread( int *a, int *b, int *c ) {
+    int tid = threadIdx.x;
+    while (tid < N) {
+        c[tid] = a[tid] + b[tid];
+        tid += blockDim.x;
+    }
+}
+
+
 int main( void ) {
     int *a, *b, *c;
     int *dev_a, *dev_b, *dev_c;
-    cudaEvent_t start,stop;
-float elapsed_ms; //elapsed time in milliseconds
+    GPUTimer gt;
+    CPUTimer ct;
 
     // allocate the memory on the CPU
     a = (int*)malloc( N * sizeof(int) );
@@ -54,18 +75,18 @@ float elapsed_ms; //elapsed time in milliseconds
     HANDLE_ERROR( cudaMemcpy( dev_b, b, N * sizeof(int),
                               cudaMemcpyHostToDevice ) );
     
-    HANDLE_ERROR( cudaEventCreate(&start) );
-    HANDLE_ERROR( cudaEventCreate(&stop) );
-    HANDLE_ERROR( cudaEventRecord(start,0) );
+    /*time the GPU kernel using GPU timer*/
+    gt.start();
+    add_block<<<128,1>>>( dev_a, dev_b, dev_c );
+    gt.stop();
+    printf("Time to run block kernel: %3.1f ms\n", 1000*gt.elapsed());
 
-    add<<<128,1>>>( dev_a, dev_b, dev_c );
-    HANDLE_ERROR( cudaEventRecord(stop,0) );
-    HANDLE_ERROR( cudaEventSynchronize(stop) );
-    HANDLE_ERROR( cudaEventElapsedTime(&elapsed_ms, start, stop) );
-    printf("Time to run kernel: %3.1f ms\n", elapsed_ms);
-
-    HANDLE_ERROR( cudaEventDestroy(start) );
-    HANDLE_ERROR( cudaEventDestroy(stop) );
+    /* *
+    gt.start();
+    add_thread<<<1,128>>>( dev_a, dev_b, dev_c );
+    gt.stop();
+    printf("Time to run thread kernel: %3.1f ms\n", 1000*gt.elapsed());
+    // */
 
     // copy the array 'c' back from the GPU to the CPU
     HANDLE_ERROR( cudaMemcpy( c, dev_c, N * sizeof(int),
@@ -79,12 +100,23 @@ float elapsed_ms; //elapsed time in milliseconds
             success = false;
         }
     }
-    if (success)    printf( "We did it!\n" );
-
+    if (success) { 
+      printf( "We did it!\n" );
+    }
     // free the memory we allocated on the GPU
     HANDLE_ERROR( cudaFree( dev_a ) );
     HANDLE_ERROR( cudaFree( dev_b ) );
     HANDLE_ERROR( cudaFree( dev_c ) );
+
+    /*time the CPU version using CPU timer*/
+    ct.start();
+    for (int i=0; i<N; i++){
+      c[i]=a[i]+b[i];
+    }
+    ct.stop();
+    printf("Time to run on CPU: %3.1f ms\n", 1000*ct.elapsed());
+
+
 
     // free the memory we allocated on the CPU
     free( a );

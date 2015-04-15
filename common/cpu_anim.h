@@ -105,11 +105,11 @@ struct CPUAnimBitmap {
     // static method used for glut callbacks
     static void Key(unsigned char key, int x, int y) {
         switch (key) {
-            case 27:
-                CPUAnimBitmap*   bitmap = *(get_bitmap_ptr());
-                bitmap->animExit( bitmap->dataBlock );
-                //delete bitmap;
-                exit(0);
+        case 27:
+            CPUAnimBitmap*   bitmap = *(get_bitmap_ptr());
+            bitmap->animExit( bitmap->dataBlock );
+            //delete bitmap;
+            exit(0);
         }
     }
 

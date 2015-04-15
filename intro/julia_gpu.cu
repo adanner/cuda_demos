@@ -14,8 +14,8 @@
  */
 
 
-#include "book.h"
-#include "cpu_bitmap.h"
+#include "common/book.h"
+#include "common/cpu_bitmap.h"
 
 #define DIM 1000
 

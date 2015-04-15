@@ -15,8 +15,8 @@
 
 
 #include <cstdio>
-#include "cpu_bitmap.h"
-#include "timer.h"
+#include "common/cpu_bitmap.h"
+#include "common/timer.h"
 
 using namespace std;
 
@@ -71,7 +71,7 @@ int main( void ) {
     CPUBitmap bitmap( DIM, DIM, NULL );
     unsigned char *ptr = bitmap.get_ptr();
 
-    Timer t;
+    CPUTimer t;
     t.start();
     kernel( ptr );
     t.stop();

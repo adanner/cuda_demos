@@ -14,7 +14,7 @@
  */
 
 
-#include "book.h"
+#include "common/book.h"
 
 __global__ void kernel( void ) {
 }

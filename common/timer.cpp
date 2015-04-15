@@ -3,21 +3,21 @@
 
 using namespace std;
 
-Timer::Timer() {
+CPUTimer::CPUTimer() {
   gettimeofday(&startTime,NULL); 
   gettimeofday(&stopTime,NULL); 
 }
 
-void Timer::start() {
+void CPUTimer::start() {
   gettimeofday(&startTime,NULL); 
 }
 
-void Timer::stop() {
+void CPUTimer::stop() {
   gettimeofday(&stopTime,NULL);
   timeSub(stopDiff, startTime, stopTime); 
 }
 
-void Timer::timeSub(
+void CPUTimer::timeSub(
     struct timeval& result, struct timeval before,  struct timeval after){
    
   if(after.tv_usec < before.tv_usec){
@@ -28,12 +28,12 @@ void Timer::timeSub(
   result.tv_usec = after.tv_usec - before.tv_usec;
 }
 
-void Timer::print() {
+void CPUTimer::print() {
   float diff = stopDiff.tv_sec+stopDiff.tv_usec/1000000.0;
   printf("Elapsed time: %.3f \n", diff);
 }
 
-float Timer::elapsed() {
+float CPUTimer::elapsed() {
   struct timeval now;
   gettimeofday(&now,NULL);
   timeSub(curDiff, startTime, now);

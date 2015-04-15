@@ -16,7 +16,7 @@
 
 #include <cstdio>
 #include <iostream>
-#include "timer.h"
+#include "common/timer.h"
 using namespace std;
 
 #define N   32*1024*1024
@@ -36,7 +36,7 @@ int main( void ) {
 		b= new int[N];
 		c= new int[N];
 
-		Timer watch;
+		CPUTimer watch;
 
     // fill the arrays 'a' and 'b' on the CPU
     for (int i=0; i<N; i++) {

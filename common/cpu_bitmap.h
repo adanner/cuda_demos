@@ -56,20 +56,20 @@ struct CPUBitmap {
         glutMainLoop();
     }
 
-     // static method used for glut callbacks
+    // static method used for glut callbacks
     static CPUBitmap** get_bitmap_ptr( void ) {
         static CPUBitmap   *gBitmap;
         return &gBitmap;
     }
 
-   // static method used for glut callbacks
+    // static method used for glut callbacks
     static void Key(unsigned char key, int x, int y) {
         switch (key) {
-            case 27:
-                CPUBitmap*   bitmap = *(get_bitmap_ptr());
-                if (bitmap->dataBlock != NULL)
-                    bitmap->bitmapExit( bitmap->dataBlock );
-                exit(0);
+        case 27:
+            CPUBitmap*   bitmap = *(get_bitmap_ptr());
+            if (bitmap->dataBlock != NULL)
+                bitmap->bitmapExit( bitmap->dataBlock );
+            exit(0);
         }
     }
 
