@@ -16,6 +16,9 @@
 
 #include "common/book.h"
 
+/* __device__ functions are called from the
+   GPU and run on the GPU. They can have 
+   returen values */
 __device__ int addem( int a, int b ) {
     return a + b;
 }

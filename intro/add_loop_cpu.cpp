@@ -19,7 +19,7 @@
 #include "common/timer.h"
 using namespace std;
 
-#define N   32*1024*1024
+#define N   10
 
 void add( int *a, int *b, int *c ) {
     int tid = 0;    // this is CPU zero, so we start at zero
@@ -46,9 +46,8 @@ int main( void ) {
 
 		watch.start();
     add( a, b, c );
-		float time = watch.elapsed();
 		watch.stop();
-		cout << "kernel CPU took "<< time*1000 << " ms " << endl;
+		cout << "kernel CPU took "<< watch.elapsed()*1000 << " ms " << endl;
 
     // display the results
 		if(N < 100){

@@ -18,10 +18,16 @@
 
 #define N   10
 
+/* Block level kernel. Logically, a grid is composed
+   of many blocks. Physically, each block is assigned to
+   a single Multiprocessor (MP) on CUDA Hardware.
+   The Jetson TK1 has only a single MP. */
 __global__ void add( int *a, int *b, int *c ) {
-    int tid = blockIdx.x;    // this thread handles the data at its thread id
-    if (tid < N)
+    // this thread handles the data at its thread id
+    int tid = blockIdx.x;    
+    if (tid < N) {
         c[tid] = a[tid] + b[tid];
+    }
 }
 
 int main( void ) {
@@ -52,6 +58,7 @@ int main( void ) {
                               cudaMemcpyDeviceToHost ) );
 
     // display the results
+    // this thread handles the data at its thread id
     for (int i=0; i<N; i++) {
         printf( "%d + %d = %d\n", a[i], b[i], c[i] );
     }

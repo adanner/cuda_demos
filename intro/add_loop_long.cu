@@ -46,6 +46,14 @@ __global__ void add_thread( int *a, int *b, int *c ) {
     }
 }
 
+/* a single threaded CPU kernel */
+void add_cpu( int *a, int *b, int *c ) {
+  int tid = 0;
+  while (tid < N){
+    c[tid] = a[tid] + b[tid];
+    tid += 1;
+  }
+}
 
 int main( void ) {
     int *a, *b, *c;
@@ -110,9 +118,7 @@ int main( void ) {
 
     /*time the CPU version using CPU timer*/
     ct.start();
-    for (int i=0; i<N; i++){
-      c[i]=a[i]+b[i];
-    }
+    add_cpu(a,b,c);
     ct.stop();
     printf("Time to run on CPU: %3.1f ms\n", 1000*ct.elapsed());
 
