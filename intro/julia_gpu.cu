@@ -16,6 +16,7 @@
 
 #include "common/book.h"
 #include "common/cpu_bitmap.h"
+#include "common/timer_gpu.h"
 
 #define DIM 1000
 
@@ -80,12 +81,16 @@ int main( void ) {
     DataBlock   data;
     CPUBitmap bitmap( DIM, DIM, &data );
     unsigned char    *dev_bitmap;
+    GPUTimer t;
 
     HANDLE_ERROR( cudaMalloc( (void**)&dev_bitmap, bitmap.image_size() ) );
     data.dev_bitmap = dev_bitmap;
 
     dim3    grid(DIM,DIM);
+    t.start();
     kernel<<<grid,1>>>( dev_bitmap );
+    t.stop();
+    printf("Time to run kernel: %5.1f ms\n", 1000*t.elapsed());
 
     HANDLE_ERROR( cudaMemcpy( bitmap.get_ptr(), dev_bitmap,
                               bitmap.image_size(),

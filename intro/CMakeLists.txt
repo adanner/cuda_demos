@@ -31,9 +31,6 @@ foreach(PROG ${EASYPROGS})
  target_link_libraries(${PROG} common ${CMAKE_THREAD_LIBS_INIT} )
 endforeach()
 
-cuda_add_executable(julia_gpu_timed julia_gpu_timed.cu ${HDRS})
-target_link_libraries(julia_gpu_timed common ${CGLLIBS})
-
 cuda_add_executable(julia_gpu julia_gpu.cu ${HDRS})
 target_link_libraries(julia_gpu common ${CGLLIBS})
 
