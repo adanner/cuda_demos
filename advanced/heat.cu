@@ -14,8 +14,8 @@
  */
 
 
-#include "book.h"
-#include "gpu_anim.h"
+#include "common/book.h"
+#include "common/gpu_anim.h"
 
 #define DIM 1024
 #define MAX_TEMP 1.0f

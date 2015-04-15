@@ -14,9 +14,8 @@
  */
 
 
-#include "cuda.h"
-#include "book.h"
-#include "cpu_bitmap.h"
+#include "common/book.h"
+#include "common/cpu_bitmap.h"
 
 #define DIM 1024
 #define PI 3.1415926535897932f
@@ -32,6 +31,7 @@ __global__ void kernel( unsigned char *ptr ) {
     // now calculate the value at that position
     const float period = 128.0f;
 
+    //Write to shared memory location 
     shared[threadIdx.x][threadIdx.y] =
             255 * (sinf(x*2.0f*PI/ period) + 1.0f) *
             (sinf(y*2.0f*PI/ period) + 1.0f) / 4.0f;
@@ -41,6 +41,7 @@ __global__ void kernel( unsigned char *ptr ) {
     //__syncthreads();
 
     ptr[offset*4 + 0] = 0;
+    //Read from shared memory location written by other thread
     ptr[offset*4 + 1] = shared[15-threadIdx.x][15-threadIdx.y];
     ptr[offset*4 + 2] = 0;
     ptr[offset*4 + 3] = 255;

@@ -17,6 +17,6 @@ SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 include_directories(./)
 add_subdirectory(common)
 add_subdirectory(intro)
-#add_subdirectory(advanced)
+add_subdirectory(advanced)
 
 

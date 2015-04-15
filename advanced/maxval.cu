@@ -1,8 +1,9 @@
-#include "book.h"
+#include "common/book.h"
 #include <climits>
 #include <cstdlib>
 #include <iostream>
-#include "timer.h"
+#include "common/timer.h"
+#include "common/timer_gpu.h"
 
 using namespace std;
 

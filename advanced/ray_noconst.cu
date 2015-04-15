@@ -15,9 +15,9 @@
 
 
 #include <cuda.h>
-#include "book.h"
-#include "cpu_bitmap.h"
-#include "timer.h"
+#include "common/book.h"
+#include "common/cpu_bitmap.h"
+#include "common/timer_gpu.h"
 
 #define DIM 1024
 
