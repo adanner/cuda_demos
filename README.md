@@ -27,10 +27,7 @@ build:
 Additional Resources
 --------------------
 
- [Github Repo][url:github]
- [CUDA By Example][book:nvidia]
- [CSinParallel][url:parallel]
 
- [url:github][https://github.com/adanner/cuda_demos]
- [book:nvidia][http://developer.download.nvidia.com/books/cuda-by-example/cuda-by-example-sample.pdf]
- [url:parallel][http://selkie.macalester.edu/csinparallel/modules/GPUProgramming/build/html/index.html]
+ * https://github.com/adanner/cuda_demos
+ * [CUDA by Example](http://developer.download.nvidia.com/books/cuda-by-example/cuda-by-example-sample.pdf)
+ * [CSinParallel GPU](http://selkie.macalester.edu/csinparallel/modules/GPUProgramming/build/html/index.html)
