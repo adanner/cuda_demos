@@ -15,7 +15,7 @@ set(EASYPROGS hello_world
 )
 
 #Common Graphics Libraries
-set(CGLLIBS ${GLUT_LIBRARY} ${OPENGL_LIBRARY} ${CMAKE_THREAD_LIBS_INIT} m)
+set(CGLLIBS ${GLUT_LIBRARIES} ${OPENGL_LIBRARY} ${CMAKE_THREAD_LIBS_INIT} m)
 
 #CS35 stuff. with CMake
 add_executable(add_loop_cpu add_loop_cpu.cpp ${CPUTIMER})

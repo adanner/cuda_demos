@@ -21,7 +21,7 @@ foreach(PROG ${GPROG})
   cuda_add_executable(${PROG} ${PROG}.cu ${HDRS})
   target_link_libraries(${PROG} 
     m common 
-    ${GLUT_LIBRARY} ${OPENGL_LIBRARY} 
+    ${GLUT_LIBRARIES} ${OPENGL_LIBRARY} 
     ${CMAKE_THREAD_LIBS_INIT})
 endforeach()
 

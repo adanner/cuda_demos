@@ -1,5 +1,8 @@
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.0.0)
 
+cmake_policy(SET CMP0072 NEW)
+
+project(cuda_demos)
 set(CMAKE_CXX_FLAGS "-g -Wall")
 
 #Find necessary packages
